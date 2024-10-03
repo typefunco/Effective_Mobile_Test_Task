@@ -54,6 +54,8 @@ func SaveUser(username, password string) error {
 		slog.Warn("Can't connect to Postgres [ERROR]")
 		return err
 	}
+	defer conn.Close(context.Background())
+
 	slog.Info("Connected to DB [OK]")
 
 	query := `INSERT INTO users (username, user_password, is_admin) VALUES ($1, $2, $3)`
@@ -74,6 +76,8 @@ func CheckIsAdmin(username string) (bool, error) {
 		slog.Warn("Can't connect to Postgres [ERROR]")
 		return false, err
 	}
+	defer conn.Close(context.Background())
+
 	slog.Info("Connected to DB [OK]")
 
 	query := "SELECT is_admin FROM USERS WHERE username = $1"

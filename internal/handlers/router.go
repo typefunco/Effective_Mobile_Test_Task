@@ -11,9 +11,11 @@ func InitRouter(server *gin.Engine) {
 	server.Handle("POST", "/sign-up", signUp)
 	server.Handle("PATCH", "/update", becomeAdmin)
 
-	protected := server.Group("/protected")
+	protected := server.Group("/music")
 	protected.Use(middleware.JWTMiddleware())
 	{
-		// hadnlers
+		protected.Handle("GET", "/songs", GetAllSongs)
+		protected.Handle("GET", "/songs/:number", GetSongs)
+		protected.Handle("GET", "/song/:song_id/:verse", GetSong)
 	}
 }
