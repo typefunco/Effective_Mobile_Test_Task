@@ -30,6 +30,11 @@ func initSecret() error {
 	return nil
 }
 
+func GetSecret() []byte {
+	secret := JwtSecret
+	return secret
+}
+
 func GenerateJWT(username string) (string, error) {
 	claims := jwt.MapClaims{
 		"username": username,
