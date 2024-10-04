@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/jackc/pgx/v5"
-	"github.com/joho/godotenv"
+	//"github.com/joho/godotenv"
 )
 
 // todo: Rewrite func for Docker container
@@ -19,24 +19,23 @@ type DB struct {
 
 func ConnectToDB() (*pgx.Conn, error) {
 	var db DB
-	err := godotenv.Load("./config/.env")
-	if err != nil {
-		slog.Info("Error loading .env file")
-		return nil, err
-	}
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	slog.Info("Error loading .env file")
+	// 	return nil, err
+	// }
 
-	dbUrl, ok := os.LookupEnv("DBURL")
-	if !ok {
-		slog.Info("DBURL not found in environment")
-		return nil, fmt.Errorf("DBURL not found in environment")
-	}
-
+	dbUrl := os.Getenv("DBURL")
+	fmt.Println(dbUrl)
 	conn, err := pgx.Connect(context.Background(), dbUrl)
+	fmt.Println(err)
 	if err != nil {
 		return nil, fmt.Errorf("unable to connect to database: %v", err)
 	}
 
 	err = conn.Ping(context.Background())
+	fmt.Println(err)
+
 	if err != nil {
 		slog.Info("Can't connect to Postgres [ERROR]")
 		return nil, err

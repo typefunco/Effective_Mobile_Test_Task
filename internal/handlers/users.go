@@ -12,10 +12,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func login(ctx *gin.Context) {
-
-}
-
+// @Summary User sign up
+// @Description Registers a new user
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param user body entity.User true "User sign up information"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /sign-up [post]
 func signUp(ctx *gin.Context) {
 	var user entity.User
 	err := ctx.ShouldBindJSON(&user)
@@ -39,6 +45,15 @@ func signUp(ctx *gin.Context) {
 
 }
 
+// @Summary Become admin
+// @Description Upgrades a user to admin status
+// @Tags users
+// @Produce json
+// @Security Bearer
+// @Success 200 {string} string "USER UPDATED TO ADMIN"
+// @Failure 401 {object} map[string]string
+// @Failure 500 {object} map[string]string
+// @Router /update [patch]
 func becomeAdmin(ctx *gin.Context) {
 	authHeader := ctx.GetHeader("Authorization")
 	if authHeader == "" {

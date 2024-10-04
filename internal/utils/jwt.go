@@ -3,28 +3,24 @@ package utils
 import (
 	"errors"
 	"fmt"
-	"log/slog"
 	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/joho/godotenv"
+	//"github.com/joho/godotenv"
 )
 
 var JwtSecret []byte
 
 func initSecret() error {
-	err := godotenv.Load("./config/.env")
-	if err != nil {
-		slog.Info("Error loading .env file [ERROR]")
-		return err
-	}
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	slog.Info("Error loading .env file [ERROR]")
+	// 	return err
+	// }
 
-	jwtEnv, ok := os.LookupEnv("DBURL")
-	if !ok {
-		slog.Info("jwt not found in environment [ERROR]")
-		return err
-	}
+	jwtEnv := os.Getenv("JWT_SECRET")
+
 	var jwtSec = []byte(jwtEnv)
 	JwtSecret = jwtSec
 	return nil
