@@ -15,7 +15,15 @@ func InitRouter(server *gin.Engine) {
 	protected.Use(middleware.JWTMiddleware())
 	{
 		protected.Handle("GET", "/songs", GetAllSongs)
-		protected.Handle("GET", "/songs/:number", GetSongs)
+		protected.Handle("GET", "/songs/:song_id", GetSongs)
 		protected.Handle("GET", "/song/:song_id/:verse", GetSong)
+	}
+
+	admin := server.Group("/music")
+	admin.Use(middleware.AdminMiddleware())
+	{
+		admin.Handle("DELETE", "/song/:id", DeleteSong)
+		admin.Handle("PATCH", "/songs/:song_id", UpdateSong)
+		admin.Handle("POST", "/song/new", NewSong)
 	}
 }
