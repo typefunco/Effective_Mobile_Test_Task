@@ -37,8 +37,8 @@
 ### Клонирование репозитория
 
 ```bash
-git clone https://github.com/yourusername/effective-mobile-music-api.git
-cd effective-mobile-music-api
+git clone https://github.com/typefunco/Effective_Mobile_Test_Task/tree/main.git
+cd effective-mobile
 ```
 
 ### Запуск приложения
